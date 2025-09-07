@@ -127,6 +127,30 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'audit' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/audit.log'),
+            'level' => 'info',
+            'days' => 90, // Keep audit logs for 90 days
+            'replace_placeholders' => true,
+        ],
+
+        'security' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/security.log'),
+            'level' => 'warning',
+            'days' => 365, // Keep security logs for 1 year
+            'replace_placeholders' => true,
+        ],
+
+        'gdpr' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/gdpr.log'),
+            'level' => 'info',
+            'days' => 2555, // Keep GDPR logs for 7 years
+            'replace_placeholders' => true,
+        ],
+
     ],
 
 ];

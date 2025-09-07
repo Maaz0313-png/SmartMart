@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Product, Category, PaginatedData } from '@/types';
+import { Product, Category, PaginatedData } from '@/Types';
 import ProductCard from '@/Components/ProductCard';
 import SearchFilters from '@/Components/SearchFilters';
 import Pagination from '@/Components/Pagination';
@@ -49,15 +49,15 @@ export default function ProductIndex({ products, categories, filters }: Props) {
 
     return (
         <AuthenticatedLayout>
-            <Head title=\"Products\" />
+            <Head title="Products" />
 
-            <div className=\"py-12\">
-                <div className=\"max-w-7xl mx-auto sm:px-6 lg:px-8\">
-                    <div className=\"bg-white overflow-hidden shadow-sm sm:rounded-lg\">
-                        <div className=\"p-6\">
-                            <div className=\"flex justify-between items-center mb-6\">
-                                <h1 className=\"text-3xl font-bold text-gray-900\">Products</h1>
-                                <div className=\"text-sm text-gray-500\">
+            <div className="py-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6">
+                            <div className="flex justify-between items-center mb-6">
+                                <h1 className="text-3xl font-bold text-gray-900">Products</h1>
+                                <div className="text-sm text-gray-500">
                                     {products.total} products found
                                 </div>
                             </div>
@@ -78,7 +78,7 @@ export default function ProductIndex({ products, categories, filters }: Props) {
 
                             {products.data.length > 0 ? (
                                 <>
-                                    <div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8\">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
                                         {products.data.map((product) => (
                                             <ProductCard key={product.id} product={product} />
                                         ))}
@@ -91,13 +91,13 @@ export default function ProductIndex({ products, categories, filters }: Props) {
                                     />
                                 </>
                             ) : (
-                                <div className=\"text-center py-12\">
-                                    <div className=\"text-gray-500 text-lg mb-4\">
+                                <div className="text-center py-12">
+                                    <div className="text-gray-500 text-lg mb-4">
                                         No products found matching your criteria.
                                     </div>
                                     <button
                                         onClick={clearFilters}
-                                        className=\"text-indigo-600 hover:text-indigo-500 font-medium\"
+                                        className="text-indigo-600 hover:text-indigo-500 font-medium"
                                     >
                                         Clear all filters
                                     </button>

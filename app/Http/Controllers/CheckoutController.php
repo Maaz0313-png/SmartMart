@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class CheckoutController extends Controller
     /**
      * Show checkout page.
      */
-    public function index(): Response
+    public function index(): Response|RedirectResponse
     {
         $cart = $this->getUserCart();
         

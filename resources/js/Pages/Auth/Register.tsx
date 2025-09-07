@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import React from "react";
+import { Head, Link, Form } from "@inertiajs/react";
 import GuestLayout from "@/Layouts/GuestLayout";
 
 interface RegisterProps {
@@ -7,21 +7,6 @@ interface RegisterProps {
 }
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
-        email: "",
-        password: "",
-        password_confirmation: "",
-        phone: "",
-        user_type: "buyer",
-    });
-
-    const submit = (e: React.FormEvent) => {
-        e.preventDefault();
-        post(route("register"), {
-            onFinish: () => reset("password", "password_confirmation"),
-        });
-    };
 
     return (
         <GuestLayout>
@@ -44,7 +29,9 @@ export default function Register() {
                         </p>
                     </div>
 
-                    <form className="mt-8 space-y-6" onSubmit={submit}>
+                    <Form action={route("register")} method="post" className="mt-8 space-y-6">
+                        {({ errors, processing }) => (
+                            <>
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div>
                                 <label htmlFor="name" className="sr-only">
@@ -57,10 +44,6 @@ export default function Register() {
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                                     placeholder="Full name"
-                                    value={data.name}
-                                    onChange={(e) =>
-                                        setData("name", e.target.value)
-                                    }
                                 />
                                 {errors.name && (
                                     <div className="text-red-600 text-sm">
@@ -80,10 +63,6 @@ export default function Register() {
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
-                                    value={data.email}
-                                    onChange={(e) =>
-                                        setData("email", e.target.value)
-                                    }
                                 />
                                 {errors.email && (
                                     <div className="text-red-600 text-sm">
@@ -102,10 +81,6 @@ export default function Register() {
                                     type="tel"
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                                     placeholder="Phone number (optional)"
-                                    value={data.phone}
-                                    onChange={(e) =>
-                                        setData("phone", e.target.value)
-                                    }
                                 />
                                 {errors.phone && (
                                     <div className="text-red-600 text-sm">
@@ -122,10 +97,7 @@ export default function Register() {
                                     id="user_type"
                                     name="user_type"
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    value={data.user_type}
-                                    onChange={(e) =>
-                                        setData("user_type", e.target.value)
-                                    }
+                                    defaultValue="buyer"
                                 >
                                     <option value="buyer">Buyer</option>
                                     <option value="seller">Seller</option>
@@ -148,10 +120,6 @@ export default function Register() {
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                                     placeholder="Password"
-                                    value={data.password}
-                                    onChange={(e) =>
-                                        setData("password", e.target.value)
-                                    }
                                 />
                                 {errors.password && (
                                     <div className="text-red-600 text-sm">
@@ -174,13 +142,6 @@ export default function Register() {
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                                     placeholder="Confirm password"
-                                    value={data.password_confirmation}
-                                    onChange={(e) =>
-                                        setData(
-                                            "password_confirmation",
-                                            e.target.value
-                                        )
-                                    }
                                 />
                                 {errors.password_confirmation && (
                                     <div className="text-red-600 text-sm">
@@ -201,7 +162,9 @@ export default function Register() {
                                     : "Create account"}
                             </button>
                         </div>
-                    </form>
+                            </>
+                        )}
+                    </Form>
                 </div>
             </div>
         </GuestLayout>

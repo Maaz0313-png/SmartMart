@@ -33,6 +33,21 @@ return [
         'low_stock_threshold' => 5,
     ],
 
+    // Tax Configuration
+    'tax' => [
+        'rate' => env('SHOP_TAX_RATE', 0.08),
+        'included_in_price' => false,
+        'calculate_by' => 'country', // country, state, zip
+    ],
+
+    // Shipping Configuration
+    'shipping' => [
+        'free_threshold' => env('SHOP_FREE_SHIPPING_THRESHOLD', 100),
+        'standard_rate' => env('SHOP_STANDARD_SHIPPING', 10),
+        'express_rate' => env('SHOP_EXPRESS_SHIPPING', 25),
+        'international_rate' => env('SHOP_INTERNATIONAL_SHIPPING', 50),
+    ],
+
     // Subscription Settings
     'subscriptions' => [
         'trial_days' => 7,

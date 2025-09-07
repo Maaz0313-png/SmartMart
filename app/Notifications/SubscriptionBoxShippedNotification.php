@@ -61,10 +61,10 @@ class SubscriptionBoxShippedNotification extends Notification implements ShouldQ
      */
     public function toSms(object $notifiable): string
     {
-        $message = \"Your SmartMart box #{$this->box->box_number} has shipped!\";
+        $message = "Your SmartMart box #{$this->box->box_number} has shipped!";
         
         if ($this->box->tracking_info && isset($this->box->tracking_info['tracking_number'])) {
-            $message .= \" Tracking: {$this->box->tracking_info['tracking_number']}\";
+            $message .= " Tracking: {$this->box->tracking_info['tracking_number']}";
         }
         
         return $message;

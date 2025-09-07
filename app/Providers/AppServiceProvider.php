@@ -11,7 +11,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(\App\Services\NotificationService::class);
+        $this->app->singleton(\App\Services\OrderService::class);
+        $this->app->singleton(\App\Services\GdprService::class);
     }
 
     /**
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register custom notification channels
+        $this->app['notification.channels']['sms'] = \App\Channels\SmsChannel::class;
     }
 }

@@ -15,10 +15,10 @@ use App\Http\Controllers\Auth\ApiAuthController;
 */
 
 // API v1 routes
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware(['api.version:v1', 'api.rate_limit:120,1'])->group(function () {
     
-    // Authentication routes (no auth required)
-    Route::prefix('auth')->group(function () {
+    // Authentication routes (no auth required) - stricter rate limiting
+    Route::prefix('auth')->middleware('api.rate_limit:5,1')->group(function () {
         Route::post('register', [ApiAuthController::class, 'register']);
         Route::post('login', [ApiAuthController::class, 'login']);
     });
@@ -83,11 +83,17 @@ Route::prefix('v2')->group(function () {
     // Future API versions can be added here
 });
 
+// API Documentation
+Route::get('docs', [\App\Http\Controllers\Api\ApiDocController::class, 'index'])->name('api.docs');
+
 // Health check endpoint
 Route::get('health', function () {
     return response()->json([
         'status' => 'healthy',
         'timestamp' => now(),
         'version' => config('app.version', '1.0.0'),
+        'environment' => app()->environment(),
+        'database' => \DB::connection()->getPdo() ? 'connected' : 'disconnected',
+        'cache' => \Cache::store()->getStore() instanceof \Illuminate\Cache\NullStore ? 'disabled' : 'enabled',
     ]);
 });

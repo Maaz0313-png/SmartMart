@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\SubscriptionPlan;
 use App\Models\Subscription;
-use Illuminate\Http\Request;\nuse Inertia\Inertia;\nuse Inertia\Response;\nuse Illuminate\Support\Facades\Auth;\nuse Laravel\Cashier\Cashier;\nuse Stripe\StripeClient;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Cashier\Cashier;
+use Stripe\StripeClient;
 
 class SubscriptionController extends Controller
 {

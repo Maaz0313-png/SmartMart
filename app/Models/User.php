@@ -110,6 +110,27 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id')
+                   ->where('notifiable_type', self::class);
+    }
+
+    public function notificationPreferences(): HasMany
+    {
+        return $this->hasMany(NotificationPreference::class);
+    }
+
+    public function dataRequests(): HasMany
+    {
+        return $this->hasMany(DataRequest::class);
+    }
+
+    public function dataProcessingAgreements(): HasMany
+    {
+        return $this->hasMany(DataProcessingAgreement::class);
+    }
+
     // Helper methods
     public function isAdmin(): bool
     {

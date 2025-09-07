@@ -19,6 +19,10 @@ class Category extends Model
         'parent_id',
         'sort_order',
         'is_active',
+        'is_featured',
+        'meta_title',
+        'meta_description',
+        'commission_rate',
         'meta_data',
     ];
 
@@ -26,6 +30,8 @@ class Category extends Model
     {
         return [
             'is_active' => 'boolean',
+            'is_featured' => 'boolean',
+            'commission_rate' => 'decimal:2',
             'meta_data' => 'array',
         ];
     }
