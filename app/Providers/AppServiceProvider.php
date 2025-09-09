@@ -22,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Register custom notification channels
-        $this->app['notification.channels']['sms'] = \App\Channels\SmsChannel::class;
+        // Only register if the notification manager is available
+        $this->app->afterResolving('notification', function ($notificationManager) {
+            $notificationManager->extend('sms', function ($app) {
+                return $app->make(\App\Channels\SmsChannel::class);
+            });
+        });
     }
 }

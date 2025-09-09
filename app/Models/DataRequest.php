@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DataRequest extends Model
 {
+    use HasFactory;
     const TYPE_EXPORT = 'export';
     const TYPE_DELETE = 'delete';
     const TYPE_RECTIFICATION = 'rectification';
@@ -27,7 +29,9 @@ class DataRequest extends Model
         'processed_at',
         'completed_at',
         'file_path',
+        'export_file_path',
         'expires_at',
+        'metadata',
     ];
 
     protected function casts(): array
@@ -37,6 +41,7 @@ class DataRequest extends Model
             'processed_at' => 'datetime',
             'completed_at' => 'datetime',
             'expires_at' => 'datetime',
+            'metadata' => 'array',
         ];
     }
 

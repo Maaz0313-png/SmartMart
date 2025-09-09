@@ -27,9 +27,11 @@ class Product extends Model
         'cost_price',
         'quantity',
         'min_quantity',
+        'low_stock_threshold',
         'track_quantity',
         'status',
         'images',
+        'image',
         'weight',
         'weight_unit',
         'dimensions',
@@ -155,6 +157,15 @@ class Product extends Model
         return $query->where('category_id', $categoryId);
     }
 
+    public function scopeSearch($query, $term)
+    {
+        return $query->where(function ($q) use ($term) {
+            $q->where('name', 'LIKE', "%{$term}%")
+              ->orWhere('description', 'LIKE', "%{$term}%")
+              ->orWhere('short_description', 'LIKE', "%{$term}%");
+        });
+    }
+
     // Helper methods
     public function getMainImageAttribute(): ?string
     {
@@ -166,25 +177,6 @@ class Product extends Model
     {
         $images = $this->images ?? [];
         return array_map(fn($image) => asset('storage/' . $image), $images);
-    }
-
-    public function getFormattedPriceAttribute(): string
-    {
-        return '$' . number_format($this->price, 2);
-    }
-
-    public function getDiscountPercentageAttribute(): ?int
-    {
-        if (!$this->compare_price || $this->compare_price <= $this->price) {
-            return null;
-        }
-
-        return round((($this->compare_price - $this->price) / $this->compare_price) * 100);
-    }
-
-    public function getAverageRatingAttribute(): float
-    {
-        return $this->reviews()->avg('rating') ?? 0;
     }
 
     public function getReviewsCountAttribute(): int
@@ -207,7 +199,7 @@ class Product extends Model
             return false;
         }
 
-        return $this->quantity <= config('smartmart.shop.low_stock_threshold', 5);
+        return $this->quantity <= $this->low_stock_threshold;
     }
 
     public function canPurchase(): bool
@@ -216,6 +208,18 @@ class Product extends Model
     }
 
     public function decrementStock(int $quantity): bool
+    {
+        return $this->reduceStock($quantity);
+    }
+
+    public function incrementStock(int $quantity): void
+    {
+        if ($this->track_quantity) {
+            $this->increment('quantity', $quantity);
+        }
+    }
+
+    public function reduceStock(int $quantity): bool
     {
         if (!$this->track_quantity) {
             return true;
@@ -229,11 +233,76 @@ class Product extends Model
         return true;
     }
 
-    public function incrementStock(int $quantity): void
+    public function increaseStock(int $quantity): void
     {
-        if ($this->track_quantity) {
-            $this->increment('quantity', $quantity);
+        $this->incrementStock($quantity);
+    }
+
+    // Accessors for testing compatibility
+    public function getStockQuantityAttribute(): int
+    {
+        return $this->quantity;
+    }
+
+    public function setStockQuantityAttribute($value): void
+    {
+        $this->attributes['quantity'] = $value;
+    }
+
+    public function getLowStockThresholdAttribute(): int
+    {
+        return config('smartmart.shop.low_stock_threshold', 5);
+    }
+
+    public function getFormattedPriceAttribute(): string
+    {
+        return '$' . number_format($this->price, 2);
+    }
+
+    public function getStockStatusAttribute(): string
+    {
+        if (!$this->track_quantity) {
+            return 'in_stock';
         }
+
+        if ($this->quantity <= 0) {
+            return 'out_of_stock';
+        }
+
+        if ($this->quantity <= $this->low_stock_threshold) {
+            return 'low_stock';
+        }
+
+        return 'in_stock';
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        // Handle both 'image' and 'images' attributes
+        if (isset($this->attributes['image'])) {
+            return asset('storage/' . $this->attributes['image']);
+        }
+        
+        $images = $this->images ?? [];
+        if (!empty($images)) {
+            return asset('storage/' . $images[0]);
+        }
+        
+        return asset('images/placeholder-product.jpg');
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        return $this->reviews()->avg('rating') ?? 0;
+    }
+
+    public function getDiscountPercentageAttribute(): ?int
+    {
+        if (!$this->compare_price || $this->compare_price <= $this->price) {
+            return null;
+        }
+
+        return round((($this->compare_price - $this->price) / $this->compare_price) * 100);
     }
 
     public function recordView(?User $user = null, ?string $sessionId = null): void

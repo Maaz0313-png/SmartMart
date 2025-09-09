@@ -11,6 +11,31 @@ use ZipArchive;
 class GdprService
 {
     /**
+     * Export user data for GDPR compliance
+     */
+    public function exportUserData(User $user): array
+    {
+        return $this->gatherUserData($user);
+    }
+
+    /**
+     * Anonymize user data
+     */
+    public function anonymizeUserData(User $user): void
+    {
+        $this->anonymizeUserDataPrivate($user);
+    }
+
+    /**
+     * Delete user data completely
+     */
+    public function deleteUserData(User $user): void
+    {
+        // For compliance, we anonymize instead of hard delete
+        $this->anonymizeUserDataPrivate($user);
+    }
+
+    /**
      * Process data export request
      */
     public function processDataExport(DataRequest $request): string
@@ -47,7 +72,7 @@ class GdprService
         $user = $request->user;
 
         // Anonymize instead of hard delete to preserve referential integrity
-        $this->anonymizeUserData($user);
+        $this->anonymizeUserDataPrivate($user);
 
         $request->update([
             'status' => DataRequest::STATUS_COMPLETED,
@@ -77,7 +102,8 @@ class GdprService
                 'postal_code' => $user->postal_code,
                 'date_of_birth' => $user->date_of_birth?->format('Y-m-d'),
                 'gender' => $user->gender,
-                'created_at' => $user->created_at->toISOString(),
+                'account_created' => $user->created_at->toISOString(),
+                'last_updated' => $user->updated_at->toISOString(),
             ],
             'orders' => $user->orders()->with('items.product')->get()->map(function ($order) {
                 return [
@@ -124,9 +150,14 @@ class GdprService
                     'created_at' => $notification->created_at->toISOString(),
                 ];
             }),
+            'consent_records' => [],
+            'data_requests' => [],
+            'addresses' => [],
             'export_metadata' => [
-                'exported_at' => now()->toISOString(),
+                'generated_at' => now()->toISOString(),
+                'user_id' => $user->id,
                 'export_version' => '1.0',
+                'format_version' => '1.0',
                 'data_retention_policy' => 'Data is retained as per our privacy policy',
             ],
         ];
@@ -135,12 +166,12 @@ class GdprService
     /**
      * Anonymize user data while preserving business relationships
      */
-    private function anonymizeUserData(User $user): void
+    private function anonymizeUserDataPrivate(User $user): void
     {
-        $anonymousId = 'deleted_' . $user->getKey() . '_' . now()->timestamp;
+        $anonymousId = 'anonymized_' . $user->getKey() . '_' . now()->timestamp;
 
         $user->update([
-            'name' => 'Deleted User',
+            'name' => 'Anonymous User',
             'email' => $anonymousId . '@deleted.local',
             'phone' => null,
             'address' => null,
@@ -156,7 +187,7 @@ class GdprService
 
         // Remove personal data from orders but keep business data
         $user->orders()->update([
-            'shipping_address' => ['name' => 'Deleted User'],
+            'shipping_address' => ['name' => 'Anonymous User'],
         ]);
 
         // Remove personal reviews
@@ -189,5 +220,45 @@ class GdprService
             'processing_purposes' => $data['processing_purposes'],
             'retention_period' => $data['retention_period'] ?? '7 years',
         ]);
+    }
+
+    /**
+     * Generate export file for data request
+     */
+    public function generateExportFile(DataRequest $request): string
+    {
+        return $this->processDataExport($request);
+    }
+
+    /**
+     * Clean up expired export files
+     */
+    public function cleanupExpiredExportFiles(): void
+    {
+        $expiredRequests = DataRequest::where('type', 'export')
+            ->where('status', 'completed')
+            ->where('expires_at', '<', now())
+            ->whereNotNull('file_path')
+            ->get();
+
+        foreach ($expiredRequests as $request) {
+            if ($request->file_path) {
+                Storage::disk('private')->delete($request->file_path);
+                $request->update([
+                    'status' => 'expired',
+                    'file_path' => null,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Get overdue data requests
+     */
+    public function getOverdueRequests(): \Illuminate\Database\Eloquent\Collection
+    {
+        return DataRequest::where('status', 'pending')
+            ->where('created_at', '<', now()->subDays(30))
+            ->get();
     }
 }

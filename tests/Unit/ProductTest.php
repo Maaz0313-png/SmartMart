@@ -30,7 +30,7 @@ class ProductTest extends TestCase
         $category = Category::factory()->create();
         $product = Product::factory()->create([
             'category_id' => $category->id,
-            'seller_id' => $seller->id
+            'user_id' => $seller->id
         ]);
 
         $this->assertInstanceOf(User::class, $product->seller);
@@ -73,11 +73,11 @@ class ProductTest extends TestCase
         $category = Category::factory()->create();
         $activeProducts = Product::factory()->count(3)->create([
             'category_id' => $category->id,
-            'is_active' => true
+            'status' => 'active'
         ]);
         $inactiveProducts = Product::factory()->count(2)->create([
             'category_id' => $category->id,
-            'is_active' => false
+            'status' => 'inactive'
         ]);
 
         $activeProductsFromDB = Product::active()->get();
@@ -96,11 +96,11 @@ class ProductTest extends TestCase
         $category = Category::factory()->create();
         $inStockProducts = Product::factory()->count(3)->create([
             'category_id' => $category->id,
-            'stock_quantity' => 10
+            'quantity' => 10
         ]);
         $outOfStockProducts = Product::factory()->count(2)->create([
             'category_id' => $category->id,
-            'stock_quantity' => 0
+            'quantity' => 0
         ]);
 
         $inStockProductsFromDB = Product::inStock()->get();
@@ -303,7 +303,7 @@ class ProductTest extends TestCase
             'image' => 'products/test-image.jpg'
         ]);
 
-        $this->assertStringContains('products/test-image.jpg', $product->image_url);
+        $this->assertStringContainsString('products/test-image.jpg', $product->image_url);
     }
 
     public function test_product_slug_generation(): void
@@ -315,6 +315,6 @@ class ProductTest extends TestCase
         ]);
 
         $this->assertNotNull($product->slug);
-        $this->assertStringContains('gaming-laptop-pro-2024', $product->slug);
+        $this->assertStringContainsString('gaming-laptop-pro-2024', $product->slug);
     }
 }

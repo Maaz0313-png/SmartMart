@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\laragon\www\SmartMart\phpunit.xml" tests="33" assertions="75" errors="3" failures="6" skipped="0" time="48.684086">
+    <testsuite name="Unit" tests="33" assertions="75" errors="3" failures="6" skipped="0" time="48.684086">
+      <testsuite name="Tests\Unit\ExampleTest" file="Example (Tests\Unit\Example)" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.050136">
+        <testcase name="That true is true" file="Example (Tests\Unit\Example)::That true is true" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" assertions="1" time="0.050136"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\GdprServiceTest" file="Gdpr Service (Tests\Unit\GdprService)" tests="13" assertions="32" errors="2" failures="1" skipped="0" time="34.174077">
+        <testcase name="Export data includes metadata" file="Gdpr Service (Tests\Unit\GdprService)::Export data includes metadata" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="4" time="23.934818"/>
+        <testcase name="Get overdue requests returns old pending requests" file="Gdpr Service (Tests\Unit\GdprService)::Get overdue requests returns old pending requests" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="2" time="0.751328"/>
+        <testcase name="Delete user data removes associated records" file="Gdpr Service (Tests\Unit\GdprService)::Delete user data removes associated records" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="1" time="1.654943">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Delete user data removes associated recordsFailed asserting that any soft deleted row in the table [users] matches the attributes {"id":12}.
+
+Found: [
+    {
+        "id": 9,
+        "name": "Admin User",
+        "email": "admin@smartmart.com",
+        "email_verified_at": "2025-09-09 06:11:14",
+        "password": "$2y$04$Oa\/Jc.KdB4Tf6Fdz\/dlDH.wk72\/ccVinaSKhvN2um9BlthQoKwXQC",
+        "phone": null,
+        "avatar": null,
+        "address": null,
+        "city": null,
+        "country": null,
+        "postal_code": null,
+        "date_of_birth": null,
+        "gender": null,
+        "is_active": 1,
+        "last_login_at": null,
+        "otp_code": null,
+        "otp_expires_at": null,
+        "preferences": null,
+        "remember_token": null,
+        "created_at": "2025-09-09 06:11:14",
+        "updated_at": "2025-09-09 06:11:14",
+        "deleted_at": null
+    },
+    {
+        "id": 10,
+        "name": "Seller User",
+        "email": "seller@smartmart.com",
+        "email_verified_at": "2025-09-09 06:11:14",
+        "password": "$2y$04$wzWu.RDNzpfctU4qkYZvFuIj7flmF2P6MCG6XORHsDNXsFeHHkO4O",
+        "phone": null,
+        "avatar": null,
+        "address": null,
+        "city": null,
+        "country": null,
+        "postal_code": null,
+        "date_of_birth": null,
+        "gender": null,
+        "is_active": 1,
+        "last_login_at": null,
+        "otp_code": null,
+        "otp_expires_at": null,
+        "preferences": null,
+        "remember_token": null,
+        "created_at": "2025-09-09 06:11:14",
+        "updated_at": "2025-09-09 06:11:14",
+        "deleted_at": null
+    },
+    {
+        "id": 11,
+        "name": "Buyer User",
+        "email": "buyer@smartmart.com",
+        "email_verified_at": "2025-09-09 06:11:14",
+        "password": "$2y$04$uDDsQks56m5AriJcGIWizeLrVjVYu7yMl2oFwRGCOzmM7t3\/nkrcm",
+        "phone": null,
+        "avatar": null,
+        "address": null,
+        "city": null,
+        "country": null,
+        "postal_code": null,
+        "date_of_birth": null,
+        "gender": null,
+        "is_active": 1,
+        "last_login_at": null,
+        "otp_code": null,
+        "otp_expires_at": null,
+        "preferences": null,
+        "remember_token": null,
+        "created_at": "2025-09-09 06:11:14",
+        "updated_at": "2025-09-09 06:11:14",
+        "deleted_at": null
+    }
+] and 2 others.&#13;
+at vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase.php:145
+at tests\Unit\GdprServiceTest.php:189</failure>
+        </testcase>
+        <testcase name="Anonymization is irreversible" file="Gdpr Service (Tests\Unit\GdprService)::Anonymization is irreversible" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="4" time="0.854893"/>
+        <testcase name="Anonymize user data preserves order history" file="Gdpr Service (Tests\Unit\GdprService)::Anonymize user data preserves order history" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="2" time="0.724148"/>
+        <testcase name="Cleanup expired export files removes old files" file="Gdpr Service (Tests\Unit\GdprService)::Cleanup expired export files removes old files" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="0" time="1.260884">
+          <error type="InvalidArgumentException">Cleanup expired export files removes old filesInvalidArgumentException: Disk [testing] does not have a configured driver.&#13;
+at vendor\laravel\framework\src\Illuminate\Filesystem\FilesystemManager.php:138
+at vendor\laravel\framework\src\Illuminate\Filesystem\FilesystemManager.php:121
+at vendor\laravel\framework\src\Illuminate\Filesystem\FilesystemManager.php:84
+at vendor\laravel\framework\src\Illuminate\Filesystem\FilesystemManager.php:460
+at vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+at tests\Unit\GdprServiceTest.php:140</error>
+        </testcase>
+        <testcase name="Export user data includes orders" file="Gdpr Service (Tests\Unit\GdprService)::Export user data includes orders" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="3" time="0.731591"/>
+        <testcase name="Export data excludes sensitive fields" file="Gdpr Service (Tests\Unit\GdprService)::Export data excludes sensitive fields" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="2" time="0.707611"/>
+        <testcase name="Export data includes formatted dates" file="Gdpr Service (Tests\Unit\GdprService)::Export data includes formatted dates" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="2" time="0.705260"/>
+        <testcase name="Generate export file creates json file" file="Gdpr Service (Tests\Unit\GdprService)::Generate export file creates json file" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="0" time="0.696775">
+          <error type="Illuminate\Database\QueryException">Generate export file creates json fileIlluminate\Database\QueryException: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'status' at row 1 (Connection: mysql, SQL: insert into `data_requests` (`user_id`, `type`, `status`, `requested_at`, `completed_at`, `expires_at`, `file_path`, `export_file_path`, `reason`, `metadata`, `updated_at`, `created_at`) values (41, export, failed, 2025-08-12 16:32:01, 2025-08-31 08:42:17, 2025-10-07 00:32:27, ?, exports/user_data_51783.json, ?, {"ip_address":"255.152.15.36","user_agent":"Mozilla\/5.0 (X11; Linux i686) AppleWebKit\/531.1 (KHTML, like Gecko) Chrome\/96.0.4784.65 Safari\/531.1 EdgA\/96.01065.31","request_source":"web"}, 2025-09-09 06:11:21, 2025-09-09 06:11:21))&#13;
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:53
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:811
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:778
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:42
+at vendor\laravel\framework\src\Illuminate\Database\Query\Processors\MySqlProcessor.php:35
+at vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:3853
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2220
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:370
+at vendor\laravel\framework\src\Illuminate\Collections\Traits\EnumeratesValues.php:271
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:365
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:321
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:315
+at tests\Unit\GdprServiceTest.php:107
+Caused by
+PDOException: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'status' at row 1
+
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:53
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:811
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:778
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:42
+at vendor\laravel\framework\src\Illuminate\Database\Query\Processors\MySqlProcessor.php:35
+at vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:3853
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2220
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:370
+at vendor\laravel\framework\src\Illuminate\Collections\Traits\EnumeratesValues.php:271
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:365
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:321
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:315
+at tests\Unit\GdprServiceTest.php:107</error>
+        </testcase>
+        <testcase name="Anonymize user data changes personal information" file="Gdpr Service (Tests\Unit\GdprService)::Anonymize user data changes personal information" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="5" time="0.743040"/>
+        <testcase name="Export user data includes all personal information" file="Gdpr Service (Tests\Unit\GdprService)::Export user data includes all personal information" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="4" time="0.699856"/>
+        <testcase name="Export user data includes consent records" file="Gdpr Service (Tests\Unit\GdprService)::Export user data includes consent records" class="Tests\Unit\GdprServiceTest" classname="Tests.Unit.GdprServiceTest" assertions="3" time="0.708930"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\ProductTest" file="Product (Tests\Unit\Product)" tests="19" assertions="42" errors="1" failures="5" skipped="0" time="14.459872">
+        <testcase name="Product has many cart items" file="Product (Tests\Unit\Product)::Product has many cart items" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="0" time="0.786605">
+          <error type="Illuminate\Database\QueryException">Product has many cart itemsIlluminate\Database\QueryException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'product_id' in 'field list' (Connection: mysql, SQL: insert into `carts` (`user_id`, `product_id`, `quantity`, `updated_at`, `created_at`) values (57, 2, 3, 2025-09-09 06:11:24, 2025-09-09 06:11:24))&#13;
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:47
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:811
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:778
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:42
+at vendor\laravel\framework\src\Illuminate\Database\Query\Processors\MySqlProcessor.php:35
+at vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:3853
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2220
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:370
+at vendor\laravel\framework\src\Illuminate\Collections\Traits\EnumeratesValues.php:271
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:365
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:325
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:315
+at tests\Unit\ProductTest.php:46
+Caused by
+PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'product_id' in 'field list'
+
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:47
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:811
+at vendor\laravel\framework\src\Illuminate\Database\Connection.php:778
+at vendor\laravel\framework\src\Illuminate\Database\MySqlConnection.php:42
+at vendor\laravel\framework\src\Illuminate\Database\Query\Processors\MySqlProcessor.php:35
+at vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:3853
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2220
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:370
+at vendor\laravel\framework\src\Illuminate\Collections\Traits\EnumeratesValues.php:271
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:365
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:325
+at vendor\laravel\framework\src\Illuminate\Database\Eloquent\Factories\Factory.php:315
+at tests\Unit\ProductTest.php:46</error>
+        </testcase>
+        <testcase name="Product belongs to seller" file="Product (Tests\Unit\Product)::Product belongs to seller" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="2" time="0.791573"/>
+        <testcase name="Product image url accessor" file="Product (Tests\Unit\Product)::Product image url accessor" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="1" time="0.826733"/>
+        <testcase name="Product stock status accessor" file="Product (Tests\Unit\Product)::Product stock status accessor" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="3" time="0.788192"/>
+        <testcase name="Product is in stock method" file="Product (Tests\Unit\Product)::Product is in stock method" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="2" time="0.746266"/>
+        <testcase name="Product scope search finds products by name" file="Product (Tests\Unit\Product)::Product scope search finds products by name" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="1" time="0.788922">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Product scope search finds products by nameFailed asserting that actual size 0 matches expected size 1.&#13;
+at tests\Unit\ProductTest.php:150</failure>
+        </testcase>
+        <testcase name="Product reduce stock fails with insufficient stock" file="Product (Tests\Unit\Product)::Product reduce stock fails with insufficient stock" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="1" time="0.794779">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Product reduce stock fails with insufficient stockFailed asserting that true is false.&#13;
+at tests\Unit\ProductTest.php:234</failure>
+        </testcase>
+        <testcase name="Product scope in stock filters products with stock" file="Product (Tests\Unit\Product)::Product scope in stock filters products with stock" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="6" time="0.784821"/>
+        <testcase name="Product is low stock method" file="Product (Tests\Unit\Product)::Product is low stock method" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="2" time="0.744435"/>
+        <testcase name="Product scope by category filters by category" file="Product (Tests\Unit\Product)::Product scope by category filters by category" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="6" time="0.776208"/>
+        <testcase name="Product scope active filters active products" file="Product (Tests\Unit\Product)::Product scope active filters active products" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="6" time="0.792465"/>
+        <testcase name="Product has many order items" file="Product (Tests\Unit\Product)::Product has many order items" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="2" time="0.749138"/>
+        <testcase name="Product slug generation" file="Product (Tests\Unit\Product)::Product slug generation" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="2" time="0.744521">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Product slug generationFailed asserting that 'rerum-ab-consequatur-9391' [ASCII](length: 25) contains "gaming-laptop-pro-2024" [ASCII](length: 22).&#13;
+at tests\Unit\ProductTest.php:318</failure>
+        </testcase>
+        <testcase name="Product average rating calculation" file="Product (Tests\Unit\Product)::Product average rating calculation" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="1" time="0.717914"/>
+        <testcase name="Product increase stock method" file="Product (Tests\Unit\Product)::Product increase stock method" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="1" time="0.706592"/>
+        <testcase name="Product belongs to category" file="Product (Tests\Unit\Product)::Product belongs to category" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="2" time="0.719722"/>
+        <testcase name="Product scope search finds products by description" file="Product (Tests\Unit\Product)::Product scope search finds products by description" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="1" time="0.768153">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Product scope search finds products by descriptionFailed asserting that actual size 0 matches expected size 1.&#13;
+at tests\Unit\ProductTest.php:171</failure>
+        </testcase>
+        <testcase name="Product formatted price accessor" file="Product (Tests\Unit\Product)::Product formatted price accessor" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="1" time="0.716519"/>
+        <testcase name="Product reduce stock method" file="Product (Tests\Unit\Product)::Product reduce stock method" class="Tests\Unit\ProductTest" classname="Tests.Unit.ProductTest" assertions="2" time="0.716315">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Product reduce stock methodFailed asserting that 10 matches expected 7.&#13;
+at tests\Unit\ProductTest.php:221</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

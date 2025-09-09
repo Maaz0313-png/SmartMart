@@ -78,7 +78,7 @@ class GdprServiceTest extends TestCase
 
         $this->assertNotEquals('John Doe', $user->name);
         $this->assertNotEquals($originalEmail, $user->email);
-        $this->assertStringContains('anonymized_', $user->email);
+        $this->assertStringContainsString('anonymized_', $user->email);
         $this->assertEquals('Anonymous User', $user->name);
         $this->assertNull($user->phone);
     }

@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->string('external_id')->nullable(); // external service ID
             $table->timestamps();
 
-            $table->index(['notifiable_type', 'notifiable_id']);
             $table->index(['type', 'status']);
             $table->index(['read_at']);
         });
